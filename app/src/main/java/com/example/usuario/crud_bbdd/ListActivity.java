@@ -13,5 +13,6 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
         listView=(ListView) findViewById(R.id.listview);
 
+
     }
 }

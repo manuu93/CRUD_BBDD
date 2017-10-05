@@ -2,6 +2,7 @@ package com.example.usuario.crud_bbdd;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.CursorWrapper;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     //BBDD_Helper helper;
     //EditText id, nombre, apellidos;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnlistar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+
             }
         });
 
@@ -89,7 +91,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnActualizar.setOnClickListener(this);
 
         Button btnBorrar = (Button) findViewById(R.id.borrar);
-        btnBorrar.setOnClickListener(this);
+        btnBorrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SQLiteDatabase db1=helper.getWritableDatabase();
+                String selection=Estructura_BBDD.NOMBRE_COLUMNA1 + " LIKE ?";
+                String [] selectionArgs={id.getText().toString()};
+                db1.delete(Estructura_BBDD.TABLE_NAME,selection,selectionArgs);
+                Toast.makeText(getApplicationContext(),"Se borro el registro con clave: " + id.getText().toString(),Toast.LENGTH_LONG).show();
+                id.setText("");
+                nombre.setText("");
+                apellidos.setText("");
+            }
+        });
 
     }
 
